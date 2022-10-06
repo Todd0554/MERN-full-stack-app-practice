@@ -1,0 +1,14 @@
+{
+  "name": "mobile-shop",
+  "version": "1.0.0",
+  "description": "MERN mobile-shop",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "todd0554",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
