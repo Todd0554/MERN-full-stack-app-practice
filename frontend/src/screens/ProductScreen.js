@@ -17,17 +17,12 @@ const ProductScreen = () => {
   const [product, setProduct] = useState({})
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      
-      const {data} = await axios.post(`/api/product/${id}`)
+    const fetchProduct = async () => { 
+      const {data} = await axios.get(`/api/product/${id}`)
       setProduct(data)
     }
-
     fetchProduct()
   }, [id])
-
-  
-
 
   return (
     
