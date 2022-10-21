@@ -18,7 +18,7 @@ import Message from '../components/Message'
 const CartScreen = () => {
     const productID = useParams().id;
     const dispatch = useDispatch()
-    const {cartItems} = useSelector((state)=> state.cart)
+    const {cartItems} = useSelector((state) => state.cart)
     const { search } = useLocation();
     const navigate = useNavigate()
     

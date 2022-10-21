@@ -5,7 +5,6 @@ export const cartReducer = (state = {cartItems: []}, action) => {
         case CART_ADD_ITEM:
             const newItem = action.payload
             const existItem = state.cartItems.find((p) => p.product === newItem.product)
-
             if (existItem) {
                 return {
                     ...state,
@@ -23,7 +22,6 @@ export const cartReducer = (state = {cartItems: []}, action) => {
                     ...state,
                     cartItems: state.cartItems.filter((p) => p.product !== action.payload)
                 }
-
         default: return state
     }
 }
