@@ -1,6 +1,11 @@
-import { CART_ADD_ITEM, CART_REMOVE_ITEM } from "../contents/cartContents"
+import { 
+    CART_ADD_ITEM, 
+    CART_REMOVE_ITEM, 
+    CART_SAVE_SHIPPING_ADDRESS 
+} from "../contents/cartContents"
 import axios from 'axios'
 
+// add product to cart action
 export const addToCart = (id, qty) => async (dispatch, getState) => {
     const {data} = await axios.get(`/api/products/${id}`)
     dispatch({type: CART_ADD_ITEM, payload: {
@@ -14,8 +19,18 @@ export const addToCart = (id, qty) => async (dispatch, getState) => {
     localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 }
 
+// remove product from cart action
 export const removerFromCart = (id) => (dispatch, getState) => {
     dispatch({type: CART_REMOVE_ITEM, payload: id})
         
     localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
+}
+
+// save postal address action
+export const savePostalAddress = (data) => (dispatch) => {
+    dispatch({
+        type: CART_SAVE_SHIPPING_ADDRESS, 
+        payload: data
+    })   
+    localStorage.setItem('postalAddress', JSON.stringify(data))
 }

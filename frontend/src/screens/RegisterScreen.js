@@ -96,7 +96,7 @@ const RegisterScreen = () => {
                     setConfirmPassword(e.target.value);
                 }} />
             </Form.Group>
-            
+            <br/>
             <Button type="submit" variant='primary'>Register</Button>
         </Form>
         <Row className="py-3">

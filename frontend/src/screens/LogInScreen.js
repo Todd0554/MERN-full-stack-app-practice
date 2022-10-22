@@ -65,6 +65,7 @@ const LogInScreen = () => {
                     setPassword(e.target.value);
                 }} />
             </Form.Group>
+            <br/>
             <Button type="submit" variant='primary'>Log In</Button>
         </Form>
         <Row className="py-3">

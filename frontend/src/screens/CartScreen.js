@@ -19,6 +19,7 @@ const CartScreen = () => {
     const productID = useParams().id;
     const dispatch = useDispatch()
     const {cartItems} = useSelector((state) => state.cart)
+    const userInfo = useSelector((state) => state.userLogin)
     const { search } = useLocation();
     const navigate = useNavigate()
     
@@ -35,7 +36,7 @@ const CartScreen = () => {
     }
 
     const checkoutHandler = () => {
-      navigate('/login?redirect=shipping')
+      navigate('/login?redirect=/shipping')
     }
 
     return (
