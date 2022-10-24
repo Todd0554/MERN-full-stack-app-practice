@@ -7,6 +7,7 @@ import {
 import {useDispatch, useSelector} from 'react-redux'
 import {savePostalAddress} from '../actions/cartActions'
 import FormContainer from '../components/FormContainer'
+import CheckoutSteps from '../components/CheckoutSteps'
 
 
 const ShippingScreen = () => {
@@ -17,15 +18,16 @@ const ShippingScreen = () => {
   const [address, setAddress] = useState(postalAddress.address)
   const [state, setState] = useState(postalAddress.state)
   const [postcode, setPostcode] = useState(postalAddress.postcode)
-  const [city, setCity] = useState(postalAddress.city)
+  const [suburb, setSuburb] = useState(postalAddress.suburb)
   
   const submitHandler = (e) => {
     e.preventDefault()
-    dispatch(savePostalAddress({address, city, state, postcode}))
+    dispatch(savePostalAddress({address, suburb, state, postcode}))
     navigate('/payment')
   }
   return (
     <FormContainer>
+      <CheckoutSteps step1 step2/>
         <h1>Postal Address</h1>
         <Form onSubmit={submitHandler}>
           <Form.Group controlId="address">
@@ -38,14 +40,14 @@ const ShippingScreen = () => {
               onChange={(e) => setAddress(e.target.value)}
             />
           </Form.Group>
-          <Form.Group controlId="city">
-            <Form.Label>City</Form.Label>
+          <Form.Group controlId="suburb">
+            <Form.Label>Suburb</Form.Label>
             <Form.Control
               type="text"
-              placeholder="example: Melbourne"
-              value={city || ''}
+              placeholder="example: Ringwood"
+              value={suburb || ''}
               required
-              onChange={(e) => setCity(e.target.value)}
+              onChange={(e) => setSuburb(e.target.value)}
             />
           </Form.Group>
           <Form.Group controlId="state">
