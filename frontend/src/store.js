@@ -9,6 +9,7 @@ import {
     getUserProfileReducer,
     updateUserProfileReducer
 } from './reducers/userReducers'
+import {orderCreateReducer} from './reducers/orderReducer'
 
 
 const reducer = combineReducers({
@@ -18,7 +19,8 @@ const reducer = combineReducers({
     userLogIn: userLogInReducer,
     userRegister: userRegisterReducer,
     userDetails: getUserProfileReducer,
-    updateDetails: updateUserProfileReducer
+    updateDetails: updateUserProfileReducer,
+    orderCreate: orderCreateReducer
 })
 
 // get cart details

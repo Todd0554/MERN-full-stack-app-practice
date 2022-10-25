@@ -5,7 +5,7 @@ const orderSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: 'User',
-    },
+      },
     orderItems: [
     {
         name: {
@@ -20,6 +20,10 @@ const orderSchema = mongoose.Schema({
             type: String,
             required: true,
         },
+        countInStock: {
+            type: Number,
+            required: true,
+        },
         price: {
             type: Number,
             required: true,
@@ -31,7 +35,7 @@ const orderSchema = mongoose.Schema({
         },  
     }
     ],
-    shippingAddress: {
+    postalAddress: {
         address: {
             type: String,
             required: true,
@@ -40,11 +44,11 @@ const orderSchema = mongoose.Schema({
             type: String,
             required: true,
         },
-        city: {
+        state: {
             type: String,
             required: true,
         },
-        postCode: {
+        postcode: {
             type: String,
             required: true,
         },
@@ -67,7 +71,12 @@ const orderSchema = mongoose.Schema({
     deliveredAt: {
         type: Date
     },
-    shippingPrice: {
+    itemsPrice: {
+        type: Number,
+        required: true,
+        default: 0,
+    },
+    postalPrice: {
         type: Number,
         required: true,
         default: 0,
