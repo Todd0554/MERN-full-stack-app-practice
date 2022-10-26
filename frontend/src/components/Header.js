@@ -28,7 +28,8 @@ const Header = () => {
                     <LinkContainer to="/cart">
                       <Nav.Link><i className="fas fa-shopping-cart"/>MyCart</Nav.Link>
                     </LinkContainer>
-                    <LinkContainer to="login">
+
+                   
                       {userInfo ? (
                         <NavDropdown title={userInfo.name} id='username'>
                           <LinkContainer to='/profile'>
@@ -36,14 +37,38 @@ const Header = () => {
                               MyHome
                             </NavDropdown.Item>
                           </LinkContainer>
-                          <NavDropdown.Item onClick={logOutHandler}>Log Out</NavDropdown.Item>
+
+                          <NavDropdown.Item onClick={logOutHandler}>
+                            Log Out
+                          </NavDropdown.Item>
                         </NavDropdown>
                         ) : (
-                        <Nav.Link><i className="fas fa-user"/>Log In</Nav.Link>
+                        <LinkContainer to='/login'>
+                          <Nav.Link><i className="fas fa-user"/>Log In</Nav.Link>
+                        </LinkContainer>
                         )
                       }
-
-                    </LinkContainer>
+                    
+                    {userInfo && userInfo.isAdmin && (
+                      <NavDropdown title='Admin' id='adminmenu'>
+                      <LinkContainer to='/admin/userlist'>
+                        <NavDropdown.Item>
+                          User List
+                        </NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to='/admin/productlist'>
+                        <NavDropdown.Item>
+                          Product List
+                        </NavDropdown.Item>
+                      </LinkContainer>
+                      <LinkContainer to='/admin/orderlist'>
+                        <NavDropdown.Item>
+                          Order List
+                        </NavDropdown.Item>
+                      </LinkContainer>
+                      
+                    </NavDropdown>
+                    )}
                   </Nav>
               </Navbar.Collapse>
             </Container>

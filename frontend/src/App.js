@@ -13,6 +13,9 @@ import ProfiledScreen from './screens/ProfileScreen'
 import ShippingScreen from './screens/ShippingScreen';
 import PaymentScreen from './screens/PaymentScreen'
 import PlaceOrderScreen from './screens/PlaceOrderScreen';
+import UserListScreen from './screens/UserListScreen';
+import ProductListScreen from './screens/ProductListScreen';
+import ProductEditScreen from './screens/ProductEditScreen';
 
 function App() {
 
@@ -26,10 +29,14 @@ function App() {
                   <Route path='/register' element={<RegisterScreen />}/>
                   <Route path='/shipping' element={<ShippingScreen />}/>
                   <Route path='/payment' element={<PaymentScreen />}/>
+                  <Route path='/admin/userlist' element={<UserListScreen />}/>
+
                   <Route path='/placeorder' element={<PlaceOrderScreen />}/>
                   <Route path='/profile' element={<ProfiledScreen />}/>
                   <Route path='/' element={<HomeScreen />} exact/>
                   <Route path='/products/:id' element={<ProductScreen />}/>
+                  <Route path='/admin/productlist' element={<ProductListScreen />}/>
+                  <Route path='/admin/productlist/:id/edit' element={<ProductEditScreen />}/>
                   <Route path='/cart/:id' element={<CartScreen />}/>
                   <Route path='/cart' element={<CartScreen />}/>
                   <Route path='/search/:keyword' element={<HomeScreen />} exact/>
