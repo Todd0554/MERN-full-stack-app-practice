@@ -7,7 +7,12 @@ import {
     PRODUCT_DETAIL_FAIL,
     PRODUCT_DELETE_REQUEST,
     PRODUCT_DELETE_SUCCESS,
-    PRODUCT_DELETE_FAIL
+    PRODUCT_DELETE_FAIL,
+    PRODUCT_CREATE_REQUEST,
+    PRODUCT_CREATE_SUCCESS,
+    PRODUCT_CREATE_FAIL,
+    PRODUCT_CREATE_RESET,
+    
 } from "../contents/productContents"
 
 // reducer for getting all products 
@@ -48,6 +53,22 @@ export const deleteProductReducer = (state = {}, action) => {
             return {loading: false, success: true}
         case PRODUCT_DELETE_FAIL: 
             return {loading: false, error: action.payload}
+        default:
+            return state     
+    }
+}
+
+// reducer for deleting one product
+export const createProductReducer = (state = {}, action) => {
+    switch (action.type) {
+        case PRODUCT_CREATE_REQUEST: 
+            return {loading: true}
+        case PRODUCT_CREATE_SUCCESS:
+            return {loading: false, success: true, product: action.payload}
+        case PRODUCT_CREATE_FAIL: 
+            return {loading: false, error: action.payload}
+        case PRODUCT_CREATE_RESET: 
+            return {}
         default:
             return state     
     }

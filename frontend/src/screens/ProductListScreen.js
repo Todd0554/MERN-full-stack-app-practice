@@ -11,8 +11,9 @@ import {
 
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import {listProducts} from '../actions/productActions'
+import {createProduct, listProducts} from '../actions/productActions'
 import {deleteProduct} from '../actions/productActions'
+import {PRODUCT_CREATE_RESET} from '../contents/productContents'
 
 const ProductListScreen = () => {
     const navigate = useNavigate()
@@ -22,19 +23,40 @@ const ProductListScreen = () => {
     const userLogIn = useSelector((state) => state.userLogIn)
     const {userInfo} = userLogIn
     const productDelete = useSelector((state) => state.productDelete)
-    const {loading: loadingDelete, error: errorDelete, success: successDelete} = productDelete
+    const {
+        loading: loadingDelete, 
+        error: errorDelete, 
+        success: successDelete
+    } = productDelete
+
+    const productCreate = useSelector((state) => state.productCreate)
+    const {
+        loading: loadingCreate, 
+        error: errorCreate, 
+        success: successCreate,
+        product: newProduct
+    } = productCreate
 
     useEffect(() => {
+        dispatch({type: PRODUCT_CREATE_RESET})
+        if (!userInfo.isAdmin) {
+            navigate('/login')
+        }
+        if (successCreate) {
+            navigate(`/admin/productlist/${newProduct._id}/edit`)
+        } else {
+            dispatch(listProducts())
+        }
         if (userInfo && userInfo.isAdmin) {
             dispatch(listProducts())
         } else {
             navigate('/login')
         }
-        // eslint-disable-next-line 
-    }, [dispatch, navigate, userInfo, successDelete])
+        // eslint-disable-next-line
+    }, [dispatch, navigate, userInfo, successDelete, successCreate, newProduct])
 
     const createProductHandler = () => {
-
+        dispatch(createProduct())
     }
 
     //delete product
@@ -49,6 +71,8 @@ const ProductListScreen = () => {
             <Col><h1>Products List</h1></Col>
             <Col className="text-right"><Button className="my-3" onClick={createProductHandler}>Create product</Button></Col>
         </Row>
+        {loadingCreate && <Loader /> }
+        {errorCreate && <Message variant="danger">{errorCreate}</Message>}
         {loadingDelete && <Loader /> }
         {errorDelete && <Message variant="danger">{errorDelete}</Message>}
         {loading ? <Loader /> : error ? <Message variant="danger">{error}</Message> : (
@@ -70,7 +94,7 @@ const ProductListScreen = () => {
                             <td>${p.price}</td>
                             <td>{p.brand}</td>
                             <td>
-                                <LinkContainer to={`/admin/product/${p._id}/edit`}>
+                                <LinkContainer to={`/admin/productlist/${p._id}/edit`}>
                                     <Button variant='light' className='btn-sm'><i className="fas fa-edit"></i></Button>
                                 </LinkContainer>
                                 <Button variant='danger' className='btn-sm' onClick={() => deleteHandler(p._id)}><i className="fas fa-trash"></i></Button>                              

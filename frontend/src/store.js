@@ -6,6 +6,7 @@ import {
 import thunk from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import { 
+    createProductReducer,
     deleteProductReducer, 
     productDetailReducer, 
     productListReducer 
@@ -34,7 +35,8 @@ const reducer = combineReducers({
     orderCreate: orderCreateReducer,
     userList: userListReducer,
     userDelete: deleteUserReducer,
-    productDelete: deleteProductReducer
+    productDelete: deleteProductReducer,
+    productCreate: createProductReducer
 })
 
 // get cart details
