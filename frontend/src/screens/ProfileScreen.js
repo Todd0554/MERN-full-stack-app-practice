@@ -44,15 +44,14 @@ const ProfileScreen = () => {
 
 
     useEffect(() => {
-        if (userInfo) {
-            dispatch(getOrdersDetails(userInfo._id))
-        }
+
         if (!userInfo) {
             navigate('/login')
         } else {
             if (!user.name || success) {
                 dispatch({type: USER_UPDATE_RESET})
                 dispatch(getUserProfile('profile'))
+                dispatch(getOrdersDetails(userInfo._id))
             } else {
                 setName(user.name)
                 setEmail(user.email)

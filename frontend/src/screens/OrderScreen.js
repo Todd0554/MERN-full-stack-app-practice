@@ -58,6 +58,7 @@ const OrderScreen = () => {
             script.type = 'text/javascript'
             script.src = `https://www.paypal.com/sdk/js?client-id=${clientId}`
             script.async = true
+
             script.onload = () => {
                 setSDK(true)
             }
@@ -76,7 +77,7 @@ const OrderScreen = () => {
                 setSDK(true)
             }
         }
-    }, [dispatch, navigate, order, id, successPay, userInfo])
+    }, [dispatch, navigate, order, id, successPay, userInfo, SDK])
 
 
   return (
@@ -162,14 +163,21 @@ const OrderScreen = () => {
                                 <Col>Total price: </Col>
                                 <Col>${order.totalPrice}</Col>
                             </Row>
-                            
-                                {order.paymentMethod === 'PayPal' && (
-                                    <ListGroup.Item>
-                                        {!SDK ? <Loader/> : (
-                                            <PayPalButton amount={order.totalPrice} onSuccess={successPaymentHandler}></PayPalButton>
-                                        )}
-                                    </ListGroup.Item>
-                                )}
+                            {!order.isPaid && (
+                                <ListGroup.Item>
+                                    {loadingPay && <Loader />}
+                                    {order.paymentMethod === 'PayPal' && (!SDK ? (
+                                        <Loader />
+                                    ) : (
+                                        <PayPalButton 
+                                            amount={order.totalPrice}
+                                            onSuccess={successPaymentHandler}
+                                        ></PayPalButton>
+                                    )
+                                    )}
+                                </ListGroup.Item>
+                            )}
+                                
                         </ListGroup.Item>
                     </ListGroup>
                 </Card>
