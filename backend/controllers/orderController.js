@@ -13,7 +13,6 @@ const addOrderItems = asyncHandler(async(req, res) => {
         postalPrice, 
         totalPrice
     } = req.body
-    
     if (orderItems && orderItems.length === 0) {
         res.status(400)
         throw new Error(`No order found.`)
@@ -37,7 +36,6 @@ const addOrderItems = asyncHandler(async(req, res) => {
 //@route: GET /api/orders/:id
 //@access: to private  
 const getOrderById = asyncHandler(async(req, res) => {
-
     const order = await Order.findById(req.params.id).populate(
         'user',
         'name email'
@@ -48,8 +46,44 @@ const getOrderById = asyncHandler(async(req, res) => {
         res.status(404)
         throw new Error('No order found.')
     }
-
-
 })
 
-export {addOrderItems, getOrderById}
+const getOrders = asyncHandler(async(req, res) => {
+    const orders = await Order.find({})
+    if (orders && orders.length !== 0) {
+        res.json(orders)
+    } else {
+        res.status(404)
+        res.json({message: 'No orders found.'})
+    }
+})
+
+const updateOrderToPaid = asyncHandler(async(req, res) => {
+    const order = await Order.findById(req.params.id)
+    if (order) {
+        order.isPaid = true
+        order.paidAt = Date.now()
+        order.paymentResult = {
+          id: req.body.id,
+          status: req.body.status,
+          update_time: req.body.update_time,
+          email_address: req.body.email_address,
+        }
+        const updatedOrder = await order.save()
+        res.json(updatedOrder)
+    } else {
+        res.status(404)
+        res.json({message: 'No order found.'})
+    }
+})
+
+const getOrdersDetails = asyncHandler(async(req, res) => {
+    const orders = await Order.find({user: req.params.userId})
+    if (orders && orders.length !== 0) {
+        res.json(orders)
+    } else {
+        res.status(404)
+        res.json({message: 'No orders found.'})
+    }
+})
+export {addOrderItems, getOrderById, getOrders, updateOrderToPaid, getOrdersDetails}

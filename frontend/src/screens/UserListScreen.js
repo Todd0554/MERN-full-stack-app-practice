@@ -1,16 +1,14 @@
 import React, {useEffect} from 'react'
 import { useNavigate} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-
 import {
     Button,
     Table, 
 } from 'react-bootstrap'
-
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import {listUsers} from '../actions/userActions'
-import {deleteUser} from '../actions/userActions'
+import {listUsers, deleteUser} from '../actions/userActions'
+
 import FormContainer from '../components/FormContainer'
 
 

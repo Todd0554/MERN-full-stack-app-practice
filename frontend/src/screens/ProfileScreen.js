@@ -4,13 +4,20 @@ import {
     Button,
     Row, 
     Col,
-    Form
+    Form,
+    ListGroup,
+    Image,
+    Card,
+    Table,
+    
 } from 'react-bootstrap'
+import {LinkContainer} from 'react-router-bootstrap'
 import {useDispatch, useSelector} from 'react-redux'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
 import {getUserProfile, updateUserProfile} from '../actions/userActions'
 import {USER_UPDATE_RESET} from '../contents/userContents'
+import { getOrdersDetails } from '../actions/orderActions'
 
 const ProfileScreen = () => {
     const [name, setName] = useState("")
@@ -24,8 +31,11 @@ const ProfileScreen = () => {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const userDetails = useSelector((state) => state.userDetails)
-    const {loading, error, user} = userDetails
+    const {loadingUser, errorUser, user} = userDetails
     
+    const ordersDetails = useSelector((state) => state.ordersDetails)
+    const {orders, loading, error} = ordersDetails
+
     const userLogIn = useSelector((state) => state.userLogIn)
     const {userInfo} = userLogIn
 
@@ -34,6 +44,9 @@ const ProfileScreen = () => {
 
 
     useEffect(() => {
+        if (userInfo) {
+            dispatch(getOrdersDetails(userInfo._id))
+        }
         if (!userInfo) {
             navigate('/login')
         } else {
@@ -58,8 +71,8 @@ const ProfileScreen = () => {
         <h1>MyHome</h1>
         {success && <Message variant="success">Details updated</Message>}
         {message && <Message variant='danger'>{message}</Message>}
-        {error && <Message variant='danger'>{error}</Message>}
-        {loading && <Loader/>}
+        {errorUser && <Message variant='danger'>{errorUser}</Message>}
+        {loadingUser && <Loader/>}
         <Form onSubmit={submitHandler}>
             <Form.Group controlId="name">
                 <Form.Label>Name: </Form.Label>
@@ -108,8 +121,45 @@ const ProfileScreen = () => {
             <Button type="submit" variant='primary'>Update</Button>
         </Form>
         </Col>
+        
         <Col md={9}>
             <h1>Order</h1>
+            <Table striped bordered hover responsive className="table-sm">
+                <thead>
+                    <tr style={{textAlign: 'center'}}>
+                        <th>ID</th>
+                        
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Paid</th>
+                        <th>Post</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                    {orders.map(order => (
+                        <tr style={{textAlign: 'center'}} key={order._id}>
+                            <td>{order._id}</td>
+                            
+                            <td>{order.createdAt}</td>
+                            <td>{order.totalPrice}</td>
+                            <td>{order.isPaid 
+                                ? (order.paidAt.substring(0,10)) 
+                                : (
+                                    <LinkContainer to={`/order/${order._id}`}>
+                                        <Button variant='light' className='btn-sm'>Pay now</Button>    
+                                    </LinkContainer>
+                                )
+                            }</td>
+                            <td>{order.isDelivered 
+                                ? (order.paidAt.substring(0,10)) 
+                                : (<i className="fas fa-times" style={{color:'red'}}></i>
+                                )
+                            }</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
         </Col>
     </Row>
   )

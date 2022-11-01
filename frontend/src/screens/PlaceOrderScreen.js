@@ -1,7 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import {Link, useNavigate} from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Button, Row, Col, Image, Card, List, ListGroup } from 'react-bootstrap'
+import { 
+    Form, 
+    Button, 
+    Row, 
+    Col, 
+    Image, 
+    Card, 
+    List, 
+    ListGroup 
+} from 'react-bootstrap'
 import Message from '../components/Message'
 import CheckoutSteps from '../components/CheckoutSteps'
 import {createOrder} from '../actions/orderActions'
