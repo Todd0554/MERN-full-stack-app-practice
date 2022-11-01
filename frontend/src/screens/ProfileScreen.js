@@ -68,7 +68,7 @@ const ProfileScreen = () => {
   return (
     <Row>
         <Col md={3}>
-        <h1>MyHome</h1>
+        <h1>MyHome!</h1>
         {success && <Message variant="success">Details updated</Message>}
         {message && <Message variant='danger'>{message}</Message>}
         {errorUser && <Message variant='danger'>{errorUser}</Message>}

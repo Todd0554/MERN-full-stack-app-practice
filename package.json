@@ -10,7 +10,8 @@
     "client": "yarn --cwd frontend/ start",
     "dev": "yarn server & yarn client",
     "data:import": "node backend/seeder",
-    "data:destroy": "node backend/seeder -d"
+    "data:destroy": "node backend/seeder -d",
+    "heroku-postbuild": "YARN_PRODUCTION=false yarn --cwd frontend/ install & yarn --cwd frontend/ build"
   },
   "author": "todd0554",
   "license": "ISC",
