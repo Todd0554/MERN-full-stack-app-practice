@@ -77,8 +77,7 @@ const OrderScreen = () => {
                 setSDK(true)
             }
         }
-    }, [dispatch, navigate, order, id, successPay, userInfo, SDK])
-
+    }, [dispatch, navigate, order, id, successPay, userInfo])
 
   return (
     loading ? <Loader/> 
