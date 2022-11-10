@@ -37,11 +37,12 @@ const PlaceOrderScreen = () => {
         if (success) {
             navigate(`/order/${order._id}`)
         }
+        
     // eslint-disable-next-line
     }, [navigate, success])
 
 
-    const placeOrderHandler = (e) => {
+    const placeOrderHandler = () => {
         dispatch(createOrder({
             orderItems: cartItems, 
             postalAddress: postalAddress, 
@@ -50,7 +51,6 @@ const PlaceOrderScreen = () => {
             postalPrice: cart.postalPrice, 
             totalPrice: cart.totalPrice
         }))
-        console.log(paymentMethod)
     }
 
    

@@ -1,5 +1,8 @@
 import axios from 'axios'
 import { 
+    ORDERS_DELIVERED_FAIL,
+    ORDERS_DELIVERED_REQUEST,
+    ORDERS_DELIVERED_SUCCESS,
     ORDERS_DETAILS_FAIL,
     ORDERS_DETAILS_REQUEST,
     ORDERS_DETAILS_SUCCESS,
@@ -146,10 +149,40 @@ export const getOrdersDetails = (userId) => async (dispatch, getState) => {
         dispatch({type: ORDERS_DETAILS_SUCCESS, payload: data})
     } catch (error) {
         dispatch({
-            type: ORDER_LIST_FAIL, 
+            type: ORDERS_DETAILS_FAIL, 
             payload: error.response && error.response.data.message 
             ? error.response.data.message 
             : error.message 
+        })
+    }
+}
+
+// pay order
+export const deliverOrder = (order) => async (dispatch, getState) => {
+    
+    try {
+        dispatch({type: ORDERS_DELIVERED_REQUEST})
+        // get userInfo from the current user who already log in
+        const {
+            userLogIn: {userInfo}
+        } = getState()
+        const config = {
+            headers: {
+                Authorization: `Bearer ${userInfo.token}`
+            }
+        }
+        const {data} = await axios.get(`/api/orders/${order._id}/deliver`, config)
+        dispatch({type: ORDERS_DELIVERED_SUCCESS, payload: data})
+    } catch (error) {
+        const message = error.response && error.response.data.message 
+        ? error.response.data.message 
+        : error.message 
+        if (message === 'Haven\'been authorized, no token was provided.') {
+            dispatch(logOut())
+        }
+        dispatch({
+            type: ORDERS_DELIVERED_FAIL, 
+            payload: message
         })
     }
 }

@@ -42,6 +42,7 @@ const RegisterScreen = () => {
         if (password !== confirmPassword) {
             setMessage("Password not match")
         } else {
+            
             dispatch(register(name, email, password))
         }
     }

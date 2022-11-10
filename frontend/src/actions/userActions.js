@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ORDERS_DETAILS_RESET } from '../contents/orderContents';
 import { 
     USER_LOGIN_REQUEST, 
     USER_LOGIN_SUCCESS, 
@@ -19,7 +20,8 @@ import {
     USER_LIST_RESET,
     USER_DELETE_REQUEST,
     USER_DELETE_SUCCESS,
-    USER_DELETE_FAIL
+    USER_DELETE_FAIL,
+    USER_DETAIL_RESET
 } from '../contents/userContents'
 
 // login POST request actions
@@ -49,6 +51,9 @@ export const logOut = () => (dispatch) => {
     localStorage.removeItem('userInfo')
     dispatch({type: USER_LOGOUT})
     dispatch({type: USER_LIST_RESET})
+    dispatch({type: USER_DETAIL_RESET})
+    dispatch({type: ORDERS_DETAILS_RESET})
+    dispatch({type: USER_REGISTER_RESET})
 }
 
 

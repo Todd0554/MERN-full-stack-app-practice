@@ -3,14 +3,11 @@ import axios from 'axios'
 import { PayPalButton } from 'react-paypal-button-v2'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import {
-  Form,
-  Button,
   ListGroup,
   Row,
   Col,
   Image,
   Card,
-  Modal,
 } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import {
@@ -20,7 +17,7 @@ import {
 } from '../actions/orderActions'
 import Message from '../components/Message'
 import Loader from '../components/Loader'
-import { ORDER_PAY_RESET } from '../contents/orderContents'
+import { ORDER_PAY_RESET, ORDERS_DELIVERED_RESET } from '../contents/orderContents'
 
 
 const OrderScreen = () => {
@@ -33,6 +30,8 @@ const OrderScreen = () => {
     const {order, loading, error} = orderDetail
     const orderPay = useSelector((state) => state.orderPay)
     const { loading: loadingPay, error: errorPay, success: successPay } = orderPay
+    const orderDelivered = useSelector((state) => state.orderDelivered)
+    const { loading: loadingDeliver, success: successDeliver } = orderDelivered
     // SDK for PAYPAL
     const [SDK, setSDK] = useState(false)
 
@@ -46,7 +45,7 @@ const OrderScreen = () => {
 
 
     const successPaymentHandler = (paymentResult) => {
-        console.log(paymentResult)
+        
         dispatch(payOrder(id, paymentResult))
     }
     
@@ -67,8 +66,9 @@ const OrderScreen = () => {
         if (!userInfo) {
             navigate('/login')
         }
-        if (!order || order._id !== id || successPay) {
+        if (!order || order._id !== id || successPay || successDeliver) {
             dispatch({ type: ORDER_PAY_RESET })
+            dispatch({ type: ORDERS_DELIVERED_RESET })
             dispatch(getOrderDetail(id))
         } else if (!order.isPaid) {
             if (!window.paypal) {
@@ -77,7 +77,7 @@ const OrderScreen = () => {
                 setSDK(true)
             }
         }
-    }, [dispatch, navigate, order, id, successPay, userInfo])
+    }, [dispatch, navigate, order, id, successPay, userInfo, successDeliver])
 
   return (
     loading ? <Loader/> 

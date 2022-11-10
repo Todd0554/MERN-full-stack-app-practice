@@ -1,6 +1,10 @@
 import { 
+    ORDERS_DELIVERED_FAIL,
+    ORDERS_DELIVERED_REQUEST,
+    ORDERS_DELIVERED_SUCCESS,
     ORDERS_DETAILS_FAIL,
     ORDERS_DETAILS_REQUEST,
+    ORDERS_DETAILS_RESET,
     ORDERS_DETAILS_SUCCESS,
     ORDER_CREATE_FAIL, 
     ORDER_CREATE_REQUEST, 
@@ -91,6 +95,24 @@ export const ordersDetailsReducer = (state = {orders:[]}, action) => {
             return {loading: false, orders: action.payload, success: true}
         case ORDERS_DETAILS_FAIL: 
             return {loading: false, error: action.payload}
+        case ORDERS_DETAILS_RESET: 
+            return {orders:[]}
+        default:
+            return state 
+    }
+}
+
+// ORDER DELIVERED
+export const orderDeliveredReducer = (state = {}, action) => {
+    switch (action.type) {
+        case ORDERS_DELIVERED_REQUEST: 
+            return {loading: true}
+        case ORDERS_DELIVERED_SUCCESS:
+            return {loading: false, success: true}
+        case ORDERS_DELIVERED_FAIL: 
+            return {loading: false, error: action.payload}
+        case ORDERS_DETAILS_RESET: 
+            return {}
         default:
             return state 
     }

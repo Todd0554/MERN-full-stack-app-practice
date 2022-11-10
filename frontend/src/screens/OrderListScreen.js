@@ -13,6 +13,7 @@ import Message from '../components/Message'
 import Loader from '../components/Loader'
 import {listOrders} from '../actions/orderActions'
 import {ORDER_LIST_RESET} from '../contents/orderContents'
+import { listUsers } from '../actions/userActions'
 
 const OrderListScreen = () => {
     const navigate = useNavigate()
@@ -20,17 +21,24 @@ const OrderListScreen = () => {
 
     const orderList = useSelector((state) => state.orderList)
     const {loading, error, orders} = orderList
-
+    
     const userLogIn = useSelector((state) => state.userLogIn)
     const {userInfo} = userLogIn
 
-    const deleteHandler = (e) => {
-    }
+    const userList = useSelector((state) => state.userList)
+    const {users} = userList
+
+    
+    // const deleteHandler = (e) => {
+    // }
 
     useEffect(() => {
         dispatch({type: ORDER_LIST_RESET})
         if (userInfo && userInfo.isAdmin) {
+            
             dispatch(listOrders())
+            dispatch(listUsers())
+            
         } else {
             navigate('/login')
         }
@@ -59,7 +67,7 @@ const OrderListScreen = () => {
                     {orders.map(order => (
                         <tr style={{textAlign: 'center'}} key={order._id}>
                             <td>{order._id}</td>
-                            <td>{order.user && order.user.name}</td>
+                            <td>{order.user.name}</td>
                             <td>{order.createdAt}</td>
                             <td>{order.totalPrice}</td>
                             <td>{order.isPaid 

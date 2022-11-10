@@ -15,6 +15,7 @@ import {
 import { cartReducer } from './reducers/cartReducer'
 import {
     orderCreateReducer, 
+    orderDeliveredReducer, 
     orderDetailReducer, 
     orderListReducer,
     orderPayReducer,
@@ -48,7 +49,8 @@ const reducer = combineReducers({
     orderList: orderListReducer,
     orderDetail: orderDetailReducer,
     orderPay: orderPayReducer,
-    ordersDetails: ordersDetailsReducer
+    ordersDetails: ordersDetailsReducer,
+    orderDelivered: orderDeliveredReducer
 })
 
 // get cart details

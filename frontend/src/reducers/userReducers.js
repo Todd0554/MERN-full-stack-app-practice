@@ -21,7 +21,8 @@ import {
     USER_LIST_RESET,
     USER_DELETE_REQUEST,
     USER_DELETE_SUCCESS,
-    USER_DELETE_FAIL
+    USER_DELETE_FAIL,
+    USER_REGISTER_RESET
     
 } from '../contents/userContents';
 
@@ -52,6 +53,8 @@ export const userRegisterReducer = (state = {}, action) => {
             return {loading: false, userInfo: action.payload}
         case USER_REGISTER_FAIL: 
             return {loading: false, error: action.payload}
+        case USER_REGISTER_RESET: 
+            return {}
         default:
             return state 
     }
@@ -66,8 +69,8 @@ export const getUserProfileReducer = (state = {user: {}}, action) => {
             return {loading: false, user: action.payload}
         case USER_DETAIL_FAIL: 
             return {loading: false, error: action.payload}
-        // case USER_DETAIL_RESET:
-        //     return { user: {} }
+        case USER_DETAIL_RESET:
+            return { user: {} }
         default:
             return state 
     }
