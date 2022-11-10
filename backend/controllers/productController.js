@@ -97,7 +97,7 @@ const updateProduct = asyncHandler(async(req, res) => {
 
 //@description: create product review
 //@route: POST /api/products/:id/reviews
-//@access: admin
+//@access: users
 const createProductReview = asyncHandler(async(req, res) => {
     // create product
     const {
@@ -114,8 +114,8 @@ const createProductReview = asyncHandler(async(req, res) => {
         // add new review
         const review = {
             name: req.user.name,
-            rating: req.user.rating,
-            comment: req.body.comment,
+            rating,
+            comment,
             user: req.user._id
         }
         product.reviews.push(review)
