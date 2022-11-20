@@ -21,7 +21,8 @@ import {
     USER_DELETE_REQUEST,
     USER_DELETE_SUCCESS,
     USER_DELETE_FAIL,
-    USER_DETAIL_RESET
+    USER_DETAIL_RESET,
+    USER_REGISTER_RESET
 } from '../contents/userContents'
 
 // login POST request actions
