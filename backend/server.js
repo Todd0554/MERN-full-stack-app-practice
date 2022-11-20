@@ -33,7 +33,13 @@ app.use(helmet.contentSecurityPolicy({
         defaultSrc: ["'self'"]
     }
 }))
-
+app.use(function (req, res, next) {
+    res.setHeader(
+      'Content-Security-Policy-Report-Only',
+      "default-src 'self'; font-src 'self'; img-src 'self'; script-src 'self'; style-src 'self' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/js/all.min.js; frame-src 'self'"
+    );
+    next();
+  });
 app.use(express.json())
 if (process.env.NODE_ENV === "development") {
     app.use(morgan('dev'))
@@ -43,7 +49,7 @@ app.use(express.urlencoded({extended: true}))
 
 // configure cors
 var corsOptions = {
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000", ],
     optionsSuccessStatus: 200
 }
 app.use(cors(corsOptions))
